@@ -1,40 +1,110 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Post } from "./post";
+import { AddPost } from "./addPost";
 
-const PostList = () => {
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [users, setUsers] = useState([]);
+export default function PostList() {
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts/")
-      .then(res => res.json())
-      .then(
-        (data) => {
-          setIsLoaded(true);
-          setUsers(data);
-        },
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      )
-  }, [])
+    fetchData();
+  }, []);
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <ul>
-        {users.map(user => (
-          <li key={user.id}>
-            <Link to={`post/${user.id}`}>{user.title}</Link>
-          </li>
-        ))}
-      </ul>
-    );
-  }
+  const fetchData = async () => {
+    await fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => response.json())
+      .then((data) => setPosts(data))
+      .catch((error) => console.log(error));
+  };
+
+  const onAdd = async (title, body) => {
+    await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      body: JSON.stringify({
+        title: title,
+        body: body
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+      .then((response) => {
+        if (response.status !== 201) {
+          return;
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        setPosts((posts) => [...posts, data]);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const onEdit = async (id, title, body) => {
+    await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        title: title,
+        body: body
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+      .then((response) => {
+        if (response.status !== 200) {
+          return;
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        const updatedPosts = posts.map((post) => {
+          if (post.id === id) {
+            post.title = title;
+            post.body = body;
+          }
+
+          return post;
+        });
+
+        setPosts((posts) => updatedPosts);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const onDelete = async (id) => {
+    await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+      method: "DELETE"
+    })
+      .then((response) => {
+        if (response.status !== 200) {
+          return;
+        } else {
+          setPosts(
+            posts.filter((post) => {
+              return post.id !== id;
+            })
+          );
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  return (
+    <div className="App">
+      <h1>Posts</h1>
+      <AddPost onAdd={onAdd} />
+      {posts.map((post) => (
+        <Post
+          id={post.id}
+          key={post.id}
+          title={post.title}
+          body={post.body}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
+      ))}
+    </div>
+  );
 }
-export default PostList;

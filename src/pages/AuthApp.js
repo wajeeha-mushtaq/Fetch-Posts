@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import Webpages from '../components';
 import {BrowserRouter as Router, Route, Routes, Link} from "react-router-dom";
-import Post from '../components/post';
 import PostList from '../components/postList';
+import SinglePost from '../components/singlePost';
 import { UserContext } from '../UserContext';
 
 function AuthApp() {
@@ -21,7 +20,7 @@ function AuthApp() {
             </ul>
            <Routes>
                  <Route exact path='/postlist' element={< PostList />}></Route>
-                 <Route exact path='/postlist/post/:id' element={< Post/>}></Route>
+                 <Route exact path='/postlist/post/:id' element={< SinglePost/>}></Route>
           </Routes>
           </div>
        </Router>
