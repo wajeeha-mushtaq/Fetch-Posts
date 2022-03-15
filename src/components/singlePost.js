@@ -5,7 +5,7 @@ export default function SinglePost(){
   var {id} = useParams();
   return(
   <div>
-      <h1>User Details</h1>
+      <h1>Post Details</h1>
       ID: {id}
   </div>
   );
