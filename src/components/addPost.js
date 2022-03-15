@@ -3,9 +3,9 @@ import React from "react";
 export const AddPost = ({ onAdd }) => {
   const handleOnSubmit = (evt) => {
     evt.preventDefault();
-    onAdd(evt.target.name.value, evt.target.email.value);
-    evt.target.name.value = "";
-    evt.target.email.value = "";
+    onAdd(evt.target.title.value, evt.target.body.value);
+    evt.target.title.value = "";
+    evt.target.body.value = "";
   };
 
   return (
