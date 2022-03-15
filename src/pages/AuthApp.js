@@ -18,9 +18,6 @@ function AuthApp() {
               <li>
                 <Link to="/postlist">Posts</Link>
               </li>
-              {/* <li>
-                <Link to="/post">About Us</Link>
-              </li> */}
             </ul>
            <Routes>
                  <Route exact path='/postlist' element={< PostList />}></Route>
