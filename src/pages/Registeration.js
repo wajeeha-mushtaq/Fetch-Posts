@@ -7,8 +7,6 @@ function Registration() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [phone, setPhone] = useState("");
-  //const [profession, setProfession] = useState("");
 
   const [flag, setFlag] = useState(false);
   const [login, setLogin] = useState(true);
@@ -75,30 +73,6 @@ function Registration() {
                   onChange={(event) => setPassword(event.target.value)}
                 />
               </div>
-{/*
-              <div className="form-group">
-                <label>Phone No.</label>
-                <input
-                  type="Phone"
-                  className="form-control"
-                  placeholder="Enter contact no"
-                  onChange={(event) => setPhone(event.target.value)}
-                />
-              </div> */}
-
-              {/* <div className="form-group">
-                <label>Choose your Profession</label>
-                <Form.Control
-                  as="select"
-                  onChange={(event) => setProfession(event.target.value)}
-                >
-                  <option>Select</option>
-                  <option>Artist</option>
-                  <option>Photographer</option>
-                  <option>Team Player</option>
-                  <option>Full Stack</option>
-                </Form.Control>
-              </div> */}
 
               <button onClick={() => log(name, email, password)} type="submit" className="btn btn-dark btn-lg btn-block">
                 Register
@@ -106,7 +80,6 @@ function Registration() {
               <p onClick={handleClick} className="forgot-password text-right">
                 Already registered{" "}log in?
               </p>
-              {/* <button onClick={() => log(name, email, password)}>Log in</button> */}
               {flag && (
                 <p color="primary" variant="danger">
                   I got it you are in hurry! But every Field is important!
