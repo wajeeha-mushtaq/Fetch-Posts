@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-export const Post = ({ title, body, id, onEdit, onDelete }) => {
+export const Comment = ({ name, body, id, onEdit, onDelete }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const handleEdit = () => {
@@ -14,7 +14,7 @@ export const Post = ({ title, body, id, onEdit, onDelete }) => {
 
   const handleOnEditSubmit = (evt) => {
     evt.preventDefault();
-    onEdit(id, evt.target.title.value, evt.target.body.value);
+    onEdit(id, evt.target.name.value, evt.target.body.value);
     setIsEdit(!isEdit);
   };
 
@@ -22,24 +22,21 @@ export const Post = ({ title, body, id, onEdit, onDelete }) => {
     <div>
       {isEdit ? (
         <form onSubmit={handleOnEditSubmit}>
-          <input placeholder="Title" name="title" defaultValue={title} />
+          <input placeholder="Name" name="name" defaultValue={name} />
           <input placeholder="Body" name="body" defaultValue={body} />
           <button onSubmit={handleOnEditSubmit}>Save</button>
         </form>
       ) : (
         <div className="post">
           <Link to={`post/${id}`}>
-            <span className="post-name">{title}</span>
+            <span className="post-name">{name}</span>
           </Link>
           <br/>
           <span className="post-email">{body}</span>
-            { onEdit != undefined?
-            <div>
-              <button onClick={handleEdit}>Edit</button>
-              <button onClick={handleDelete}>Delete</button>
-            </div>:
-            <div></div>
-            }
+          <div>
+            <button onClick={handleEdit}>Edit</button>
+            <button onClick={handleDelete}>Delete</button>
+          </div>
         </div>
       )}
     </div>

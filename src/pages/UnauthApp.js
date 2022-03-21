@@ -1,15 +1,16 @@
-import React, { useContext, useState } from 'react';
-import { UserContext } from '../UserContext';
+import React from 'react';
+import Registration from './Registeration';
 
 function UnauthApp() {
-  const { login } = useContext(UserContext);
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  // const { login } = useContext(UserContext);
+  // const [name, setName] = useState();
+  // const [email, setEmail] = useState();
+  // const [password, setPassword] = useState();
 
   return (
     <>
-      <h1>Please, log in!</h1>
+    <Registration/>
+      {/* <h1>Please, log in!</h1>
 
       <label>Name:</label>
       <input
@@ -34,7 +35,7 @@ function UnauthApp() {
           setPassword(event.target.value);
         }}
       />
-      <button onClick={() => login(name, email, password)}>Log in</button>
+      <button onClick={() => login(name, email, password)}>Log in</button> */}
     </>
   );
 }

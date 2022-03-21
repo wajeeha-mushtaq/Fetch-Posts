@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Post } from "./post";
 import { AddPost } from "./addPost";
+import { UserContext } from '../UserContext';
 
 export default function PostList() {
   const [posts, setPosts] = useState([]);
+
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     fetchData();
@@ -12,7 +15,9 @@ export default function PostList() {
   const fetchData = async () => {
     await fetch("https://jsonplaceholder.typicode.com/posts")
       .then((response) => response.json())
-      .then((data) => setPosts(data))
+      .then((data) => {
+        setPosts(data);
+      })
       .catch((error) => console.log(error));
   };
 
@@ -20,6 +25,7 @@ export default function PostList() {
     await fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
       body: JSON.stringify({
+        //userId:10,
         title: title,
         body: body
       }),
@@ -36,6 +42,7 @@ export default function PostList() {
       })
       .then((data) => {
         setPosts((posts) => [...posts, data]);
+        console.log(posts);
       })
       .catch((error) => console.log(error));
   };
@@ -64,7 +71,6 @@ export default function PostList() {
             post.title = title;
             post.body = body;
           }
-
           return post;
         });
 
@@ -96,14 +102,22 @@ export default function PostList() {
       <h1>Posts</h1>
       <AddPost onAdd={onAdd} />
       {posts.map((post) => (
-        <Post
-          id={post.id}
-          key={post.id}
-          title={post.title}
-          body={post.body}
-          onEdit={onEdit}
-          onDelete={onDelete}
-        />
+        console.table(user),
+        user.userId == post.userId?
+          <Post
+            id={post.id}
+            key={post.id}
+            title={post.title}
+            body={post.body}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          /> :
+          <Post
+            id={post.id}
+            key={post.id}
+            title={post.title}
+            body={post.body}
+          />
       ))}
     </div>
   );

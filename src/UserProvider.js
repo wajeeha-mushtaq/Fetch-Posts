@@ -3,11 +3,13 @@ import { UserContext } from './UserContext';
 
 export const UserProvider = ({ children }) => {
   // User is the name of the "data" that gets stored in context
-  const [user, setUser] = useState({ name: '',  email: '', password: '', auth: true });
+  const [user, setUser] = useState({ userId:'', name: '',  email: '', password: '', auth: true });
+  var id=10;
 
   // Login updates the user data with a name parameter
-  const login = (name, email, password) => {
+  const log = (name, email, password) => {
     setUser((user) => ({
+      userId: id++,
       name: name,
       email: email,
       password: password,
@@ -26,7 +28,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, log, logout }}>
       {children}
     </UserContext.Provider>
   );
