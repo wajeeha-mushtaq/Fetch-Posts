@@ -82,7 +82,7 @@ function Registration() {
               </p>
               {flag && (
                 <p color="primary" variant="danger">
-                  I got it you are in hurry! But every Field is important!
+                  Every Field is important!
                 </p>
               )}
             </form>
